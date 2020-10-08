@@ -2,5 +2,13 @@
 
 Para prosseguir com a configuração local será necessário ter o [Node.js](https://nodejs.org/en/) instalado em sua máquina.
 
-Para instalar as dependências utilize:
+## Instalando as dependências:
+
 `npm install` ou `yarn`
+
+## Rodando o projeto:
+
+`npm run start` ou `yarn start`
+
+Em seguida pode abrir no seu navegador preferido a URL:
+http://localhost:3000/
