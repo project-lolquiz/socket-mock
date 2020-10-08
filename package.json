@@ -1,0 +1,27 @@
+{
+  "name": "socket-mock",
+  "version": "1.0.0",
+  "description": "Testing rooms conections",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/project-lolquiz/socket-mock.git"
+  },
+  "keywords": [
+    "socket.io",
+    "node",
+    "room"
+  ],
+  "author": "Carlos Costa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/project-lolquiz/socket-mock/issues"
+  },
+  "homepage": "https://github.com/project-lolquiz/socket-mock#readme",
+  "dependencies": {
+    "socket.io": "^2.3.0"
+  }
+}
