@@ -1,4 +1,4 @@
-# Mock Socket IO
+# PoC Socket IO
 
 Para prosseguir com a configuração local será necessário ter o [Node.js](https://nodejs.org/en/) instalado em sua máquina.
 
