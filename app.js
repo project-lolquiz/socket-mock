@@ -30,6 +30,15 @@ io.on('connect', (socket) => {
 
     io.in(room).emit('connectToRoom', members);
   });
+
+  socket.on('disconnect', () => {
+    const sockets = io.in(socket.room);
+    const members = Object.keys(sockets.sockets).map(
+      (item) => sockets.sockets[item].nickname
+    );
+
+    io.in(socket.room).emit('connectToRoom', members);
+  });
 });
 
 httpServer.listen(port, function () {
