@@ -1,6 +1,6 @@
 const app = require('express')();
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
+const httpServer = require('http').createServer(app);
+const io = require('socket.io')(httpServer);
 
 const port = process.env.PORT || 3000;
 
@@ -8,18 +8,30 @@ app.get('/', function (req, res) {
   res.sendFile(`${__dirname}/index.html`);
 });
 
-io.on('connection', (socket) => {
-  socket.on('room', function (room) {
-    if (socket.room) socket.leave(socket.room);
-
-    socket.room = room;
-    socket.join(room);
-  });
-
-  //Send this event to everyone in the room.
-  io.sockets.in('xablau').emit('connectToRoom', 'You are in room no. ');
+app.get('/:id', function (req, res) {
+  res.sendFile(`${__dirname}/index.html`);
 });
 
-http.listen(port, function () {
+io.on('connect', (socket) => {
+  socket.on('room', function (data) {
+    if (socket.room) socket.leave(socket.room);
+
+    const { room, nickname } = data;
+    socket.room = room;
+    socket.nickname = nickname;
+    socket.join(room);
+
+    // const users = socket.adapter.rooms[room]?.sockets;
+
+    const sockets = io.in(room);
+    const members = Object.keys(sockets.sockets)
+      .filter((item) => sockets.sockets[item].room === room)
+      .map((item) => sockets.sockets[item].nickname);
+
+    io.in(room).emit('connectToRoom', members);
+  });
+});
+
+httpServer.listen(port, function () {
   console.log(`listening on localhost: ${port}`);
 });

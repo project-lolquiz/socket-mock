@@ -2,19 +2,54 @@
 <html>
   <head>
     <title>Hello world</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous">
   </head>
   <script src="/socket.io/socket.io.js"></script>
 
-  <script>
-    var socket = io();
 
-    socket.emit('room', 'xablau');
+  <body>
+    <main>
+      <form id="form" class="container">
+        <label for="inputName">Qual é o seu nome?</label>
+        <input id="inputName" type="text"/>
+
+        <button type="submit">
+          Entrar
+        </button>
+      </form>
+
+      <section id="room" class="d-none"></section>
+    </main>
+  </body>
+
+  <script>
+    const socket = io();
 
     socket.on('connectToRoom', function (data) {
-      document.body.innerHTML = '';
-      document.write(data);
+      document.getElementById('room').innerText = data;
     });
-  </script>
 
-  <body></body>
+    const form = document.getElementById('form');
+
+    const handleNameSubmit = (event) => {
+      event.preventDefault()
+
+      const room = location.pathname;
+      const nickname = document.getElementById('inputName').value;
+
+      socket.emit('room', {room, nickname});
+      form.classList.add('d-none');
+      handleRoom();
+    }
+
+    form.addEventListener('submit', handleNameSubmit);
+
+    function handleRoom() {
+      const roomContainer = document.getElementById('room');
+      roomContainer.classList.remove("d-none");
+    }
+  </script>
 </html>
